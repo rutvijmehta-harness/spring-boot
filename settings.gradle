@@ -27,25 +27,6 @@ rootProject.name="spring-boot-build"
 
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
-settings.gradle.projectsLoaded {
-	gradleEnterprise {
-		buildScan {
-			def toolchainVersion = settings.gradle.rootProject.findProperty('toolchainVersion')
-			if (toolchainVersion != null) {
-				value('Toolchain version', toolchainVersion)
-				tag("JDK-$toolchainVersion")
-			}
-			def buildDir = settings.gradle.rootProject.getBuildDir()
-			buildDir.mkdirs()
-			new File(buildDir, "build-scan-uri.txt").text = "build scan not generated"
-			buildScanPublished { scan ->
-				buildDir.mkdirs()
-				new File(buildDir, "build-scan-uri.txt").text = "<${scan.buildScanUri}|build scan>\n"
-			}
-		}
-	}
-}
-
 include "spring-boot-project:spring-boot-dependencies"
 include "spring-boot-project:spring-boot-parent"
 include "spring-boot-project:spring-boot-tools:spring-boot-antlib"
