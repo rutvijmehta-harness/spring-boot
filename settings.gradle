@@ -18,6 +18,20 @@ pluginManagement {
 	}
 }
 
+buildCache {
+    local { enabled = System.getenv('CI') != 'true' }
+    remote(HttpBuildCache) {
+        push = System.getenv('CI') == 'true'
+        enabled = System.getenv('CI') == 'true'
+        url = System.getenv('HARNESS_CACHE_NODE_URL')
+        credentials {
+            username = System.getenv('HARNESS_CACHE_NODE_USER')
+            password = System.getenv('HARNESS_CACHE_NODE_TOKEN')
+        }
+        allowInsecureProtocol = true
+    }
+}
+
 plugins {
 	id "com.gradle.enterprise" version "3.12.5"
 	id "io.spring.ge.conventions" version "0.0.13"
